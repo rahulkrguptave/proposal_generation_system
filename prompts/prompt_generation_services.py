@@ -1,29 +1,38 @@
 def get_suitable_prompt(keyword: str, user_message: str):
+    example = get_keyword_example(keyword)
     if keyword == "objective":
         prompt = f"""
-    You are an expert project documentation writer.
-    
-    Your task is to read the following variable input:
-    
-    user_requirement = "{user_message}"
-    
-    Based on this requirement, generate a structured JSON output with the key:
-    
-    {{
-      "keyname": "OBJECTIVES",
-      "bullet_points": [
+        You are an expert project documentation writer.
+
+        Your task is to read the following variable input:
+
+        user_requirement = "{user_message}"
+
+        Below is an example showing the style, depth, and level of detail expected. 
+        This example is ONLY for reference and should NOT be copied verbatim:
+
+        EXAMPLE_CONTENT:
+        \"\"\"
+        {example}
+        \"\"\"
+
+        Now generate a structured JSON output with the format:
+
         {{
-          "pointNumber": "1",
-          "headline": "Write a clear, short objective headline based on the requirement",
-          "description": "Write a concise description that explains the objective in 1–2 sentences."
-        }},
-        {{
-          "pointNumber": "2",
-          "headline": "...",
-          "description": "..."
+          "keyname": "OBJECTIVES",
+          "bullet_points": [
+            {{
+              "pointNumber": "1",
+              "headline": "Write a clear, short objective headline based on the requirement",
+              "description": "Write a concise description that explains the objective in 1–2 sentences."
+            }},
+            {{
+              "pointNumber": "2",
+              "headline": "...",
+              "description": "..."
+            }}
+          ]
         }}
-      ]
-    }}
     
     Guidelines:
     - Generate **3–9 objectives** depending on the complexity of the user requirement.
@@ -40,9 +49,16 @@ def get_suitable_prompt(keyword: str, user_message: str):
 
     Your task is to read the following variable input:
 
-    user_requirement = "{user_message}"
+    user_requirement = "{user_message}"        
+    Below is an example showing the style, depth, and level of detail expected. 
+    This example is ONLY for reference and should NOT be copied verbatim:
 
-    Based on this requirement, generate a structured JSON output with the following format:
+    EXAMPLE_CONTENT:
+    \"\"\"
+    {example}
+    \"\"\"
+
+    Now generate a structured JSON output with the format:
 
     {{
       "keyname": "FEATURES AND FUNCTIONALITIES",
@@ -92,9 +108,15 @@ def get_suitable_prompt(keyword: str, user_message: str):
 
         user_requirement = "{user_message}"
 
-        Based on this requirement, generate a structured JSON response for the section titled "TECHNICAL APPROACH" (keep the key in uppercase exactly).
+    Below is an example showing the style, depth, and level of detail expected. 
+    This example is ONLY for reference and should NOT be copied verbatim:
 
-        The JSON structure must follow this exact format:
+    EXAMPLE_CONTENT:
+    \"\"\"
+    {example}
+    \"\"\"
+
+    Now generate a structured JSON output with the format:
 
         {{
           "keyname": "TECHNICAL APPROACH",
@@ -131,9 +153,15 @@ def get_suitable_prompt(keyword: str, user_message: str):
 
             user_requirement = "{user_message}"
 
-            Based on this requirement, generate a structured JSON response for the section titled "TECHNOLOGY STACK" (keep the key in uppercase exactly).
+    Below is an example showing the style, depth, and level of detail expected. 
+    This example is ONLY for reference and should NOT be copied verbatim:
 
-            The JSON must follow this exact structure:
+    EXAMPLE_CONTENT:
+    \"\"\"
+    {example}
+    \"\"\"
+
+    Now generate a structured JSON output with the format:
 
             {{
               "keyname": "TECHNOLOGY STACK",
@@ -180,9 +208,15 @@ def get_suitable_prompt(keyword: str, user_message: str):
 
         user_requirement = "{user_message}"
 
-        Based on this requirement, generate a structured JSON response for the section titled "TIME AND BUDGET ESTIMATE" (keep the key in uppercase exactly).
+    Below is an example showing the style, depth, and level of detail expected. 
+    This example is ONLY for reference and should NOT be copied verbatim:
 
-        The JSON must follow this exact structure:
+    EXAMPLE_CONTENT:
+    \"\"\"
+    {example}
+    \"\"\"
+
+    Now generate a structured JSON output with the format:
 
         {{
           "keyname": "TIME AND BUDGET ESTIMATE",
@@ -215,3 +249,195 @@ def get_suitable_prompt(keyword: str, user_message: str):
         return prompt
     else:
         return None
+
+
+def get_keyword_example(keyword: str):
+    if keyword == "objective":
+        return (
+"""OBJECTIVES
+Develop a Modern, Lightweight Online Store:
+ Build a clean, responsive WordPress-based e-commerce website optimized for both desktop and mobile devices.
+Showcase 12–15 Products Effectively:
+ Design an intuitive product catalog with detailed product pages including images, pricing, descriptions, and availability.
+Enable Seamless Checkout & Payment:
+ Integrate secure, user-friendly checkout functionality with international payment gateways such as Stripe and PayPal for multi-currency transactions.
+Implement Automated Order & Email Notifications:
+ Set up automatic email alerts for both the customer and the client — confirming order details, payment receipts, and purchase summaries.
+Create an Informative Contact Page:
+ Include a professional contact page with inquiry form, company details, and direct communication options.
+Ensure Security & Data Compliance:
+ Implement SSL encryption, spam protection, and GDPR-compliant privacy features for safe transactions and data handling.
+Simplify Admin Management:
+ Provide an easy-to-use backend for adding, editing, and tracking products, managing orders, and viewing customer purchase data.
+Enhance User Experience (UX):
+ Prioritize fast loading speeds, clear navigation, and minimal clicks from product selection to checkout for better conversions.
+Scalability & Future Readiness:
+ Keep the website flexible for future additions like coupons, product variants, or blog modules."""
+        )
+
+    if keyword == "feature_and_functionalities":
+        return (
+"""FEATURES AND FUNCTIONALITIES
+Front-End Features
+1. Home Page:
+ - Elegant, mobile-friendly layout showcasing featured products (12–15 total).
+ - Banner for promotions or seasonal offers.
+ - Quick navigation to all product categories.
+ - Prominent “Shop Now” and “Contact” buttons.
+
+2. Product Catalog:
+ - Product listings categorized (e.g., by type, size, or collection).
+ - Search and filter by product name, price, or category.
+ - Pagination for easy browsing.
+ - “Add to Cart” and “View Details” options directly from the listing page.
+
+3. Product Details Page:
+ - High-quality product images with zoom feature.
+ - Product title, short description, and full details.
+ - Display of price, availability, and SKU.
+ - “Add to Cart” and “Buy Now” buttons.
+ - Customer reviews and star ratings (optional).
+
+4. Shopping Cart:
+ - View, update, or remove products.
+ - Real-time calculation of totals, shipping, and taxes.
+ - Option to apply coupon codes (future-ready).
+
+5. Checkout Process:
+ - Guest checkout and account creation options.
+ - Secure input fields for billing/shipping information.
+ - Order summary and tax breakdown before payment.
+ - Integration with Stripe and PayPal for international payments.
+ - Email confirmation sent to both customer and client.
+
+6. Order Confirmation & Notifications:
+ - Automatic emails with order details, invoice, and customer information.
+ - Client receives all purchase summaries instantly.
+
+7. Contact Page:
+ - Inquiry/contact form with email notification.
+ - Company address, business email, and phone number.
+ - Optional Google Map integration.
+
+8. Responsive Design:
+ - Fully optimized for desktop, tablet, and mobile.
+ - Tested for cross-browser compatibility.
+
+Back-End (Admin) Features
+1. Product Management:
+ - Add, edit, or delete products from WordPress dashboard.
+ - Manage descriptions, categories, prices, images.
+ - Mark products as “featured.”
+
+2. Order & Customer Management:
+ - Dashboard with latest orders and total sales.
+ - View, update, process orders.
+ - Export order details.
+ - Access full customer information.
+
+3. Inventory Management:
+ - Track stock and low-stock alerts.
+ - Update quantities directly.
+
+4. Payment & Shipping Settings:
+ - Configure Stripe and PayPal.
+ - Manage shipping options (flat rate, free, pickup).
+ - Tax configuration.
+
+5. Content Management:
+ - Edit pages like Home, Contact, Policies.
+ - Update banners and promotions.
+
+6. Security & Performance:
+ - SSL for transactions.
+ - CAPTCHA-protected forms.
+ - Backups & security updates.
+ - Basic SEO optimization."""
+        )
+
+    if keyword == "technical_approach":
+        return (
+"""TECHNICAL APPROACH
+1. Requirement Analysis:
+ - Understand brand identity, product range (12–15 items), and target audience.
+ - Define essential features: listings, payments, notifications.
+ - Identify admin requirements like stock tracking and email alerts.
+
+2. Design & Theme Selection:
+ - Choose lightweight premium theme optimized for WooCommerce.
+ - Customize colors, typography, layout per brand guidelines.
+ - Create modern, minimal, user-friendly layout.
+ - Ensure responsive and accessible UI.
+
+3. WooCommerce Setup & Configuration:
+ - Install and configure WooCommerce.
+ - Setup categories, attributes, and variations.
+ - Implement tax, currency, shipping rules.
+ - Configure automatic inventory and order tracking.
+
+4. Payment Gateway Integration:
+ - Integrate Stripe & PayPal for secure multi-currency payments.
+ - Enable SSL.
+ - Configure sandbox testing.
+
+5. Email & Notification System:
+ - Configure email confirmations, receipts, admin alerts.
+ - Include full customer + product data in admin emails.
+ - Optional SMTP integration for reliability.
+
+6. Contact & Inquiry System:
+ - Create dedicated Contact page.
+ - Send form data directly to client email.
+ - Optional reCAPTCHA.
+
+7. SEO & Performance Optimization:
+ - Use Yoast SEO or RankMath.
+ - Optimize images using Smush/Imagify.
+ - Enable caching via WP Rocket/W3 Cache.
+ - Use CDN for global speeds.
+
+8. Security & Maintenance:
+ - Two-factor authentication for admin.
+ - Install Wordfence/Sucuri.
+ - Automatic backups (UpdraftPlus).
+ - Regular updates of core/theme/plugins.
+
+9. Testing & QA:
+ - Test browsing, checkout, payments.
+ - Validate emails.
+ - Check mobile responsiveness + browser compatibility.
+ - Security & performance checks.
+
+10. Deployment & Post-Launch Support:
+ - Deploy on secure hosting (SiteGround, Bluehost, AWS Lightsail).
+ - Final verification of payment gateways + SSL.
+ - Provide 30 days of post-launch support."""
+        )
+
+    if keyword == "technology_stack":
+        return (
+"""TECHNOLOGY STACK
+Platform: WordPress
+E-commerce Plugin: WooCommerce
+Frontend: HTML5, CSS3, JavaScript (Bootstrap for responsiveness)
+Backend: PHP (WordPress Core), MySQL
+Payment Gateways: Stripe & PayPal (International)
+Security: SSL Certificate, reCAPTCHA, Regular Backups
+SEO & Performance: Yoast SEO, WP Rocket, Cloudflare CDN
+Backup & Maintenance: UpdraftPlus
+Hosting: SiteGround / Bluehost (with SSL and daily backups)"""
+        )
+
+    if keyword == "time_and_budget_estimate":
+        return (
+"""TIME AND BUDGET ESTIMATE
+The entire project will be completed in 1 phase.
+
+Estimated Timeline:
+ - 5 to 6 weeks total (Full Time)
+
+Allocated Resources:
+ - 1 WordPress + PHP Developer"""
+        )
+
+    return ""
